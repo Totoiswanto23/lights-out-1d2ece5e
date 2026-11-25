@@ -13,8 +13,14 @@ const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 const LINE =
   "Lid down. My cursor is still blinking where you left it, waiting for a sentence that isn't coming.";
 
-if (LINE.length < 1 || LINE.length > 200 || !LINE.trim()) {
-  console.error(`entry line is ${LINE.length} chars, must be 1-200`);
+// The gate allows 1–200 characters, one line, not only whitespace.
+// The line below is 98 characters: short and plain, like a real
+// status update, with the sadness carried by the blinking cursor
+// rather than by any announced grief.
+const MAX_CHARS = 200;
+
+if (LINE.length < 1 || LINE.length > MAX_CHARS || !LINE.trim()) {
+  console.error(`entry line is ${LINE.length} chars, must be 1-${MAX_CHARS}`);
   process.exit(1);
 }
 if (LINE.includes('\n')) {
